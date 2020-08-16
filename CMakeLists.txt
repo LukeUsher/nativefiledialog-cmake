@@ -22,7 +22,7 @@ elseif (UNIX)
     message(FATAL_ERROR "Cannot detect your system, please report to https://github.com/aarcangeli/nativefiledialog-cmake/issues")
 endif ()
 
-add_library(nativefiledialog ${SOURCES})
+add_library(nativefiledialog STATIC ${SOURCES})
 
 target_include_directories(nativefiledialog PUBLIC 
 						$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>
