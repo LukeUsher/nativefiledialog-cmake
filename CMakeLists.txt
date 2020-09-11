@@ -13,7 +13,8 @@ if (WIN32)
     REQUIRE_INCLUDE_FILE(windows.h HAS_WINDOWS)
     list(APPEND SOURCES src/nfd_win.cpp)
 elseif (APPLE)
-    REQUIRE_INCLUDE_FILE(AppKit/AppKit.h HAS_APPKIT)
+    find_library(APPLICATION_SERVICES_LIBRARY ApplicationServices REQUIRED)
+    find_library(COCOA_LIBRARY Cocoa REQUIRED)
     list(APPEND SOURCES src/nfd_cocoa.m)
 elseif (UNIX)
     FIND_PACKAGE(PkgConfig REQUIRED)
@@ -32,4 +33,8 @@ target_include_directories(nativefiledialog PUBLIC
 						"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 if (UNIX AND NOT APPLE)
     target_link_libraries(nativefiledialog PUBLIC ${GTK3_LIBRARIES})
+elseif (APPLE)
+    target_link_libraries(nativefiledialog PUBLIC  ${APPLICATION_SERVICES_LIBRARY} ${COCOA_LIBRARY})
 endif ()
+
+
